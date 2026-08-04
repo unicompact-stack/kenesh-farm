@@ -139,7 +139,7 @@ function App() {
             position: 'relative',
             overflow: 'hidden',
           }}>
-            <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(/images/header-fresh.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.15 }} />
+            <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(/images/farm-hero.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.35 }} />
             <div style={{ position: 'relative', zIndex: 1 }}>
               <svg width="36" height="28" viewBox="0 0 40 30" fill="white" style={{ marginBottom: 8 }}>
                 <path d="M10 20c0-3 2-5 4-6l1-2c1-2 1-4 0-5s-3-2-5-2c-1 0-2 0-3 1-2 2-3 4-3 6 0 1 0 2 1 3l-2 4c-1 2-1 4 0 6s3 3 5 3h22c3 0 5-2 5-5s-2-5-5-5c-1 0-2 0-3 1l-2-2c-1-2-1-4 0-5s3-2 5-2c1 0 2 0 3 1 2 2 3 4 3 6 0 1 0 2-1 3l2 4c1 2 1 4 0 6" opacity="0.9"/>
@@ -155,7 +155,10 @@ function App() {
               const qty = quantities[product.id] || 0;
               const isAvailable = product.status === 'available';
               return (
-                <div key={product.id} className="product-card" style={{ opacity: isAvailable ? 1 : 0.5 }}>
+                <div key={product.id} className="product-card" style={{ opacity: isAvailable ? 1 : 0.85 }}>
+                  {product.status === 'available' && <span className="product-badge product-badge--available">В наличии</span>}
+                  {product.status === 'soon' && <span className="product-badge product-badge--soon">Скоро будет</span>}
+                  {product.status === 'unavailable' && <span className="product-badge product-badge--unavailable">Нет в наличии</span>}
                   <img src={product.image} alt={product.name} />
                   <div className="product-card-info">
                     <h3>{product.name}</h3>
@@ -170,7 +173,7 @@ function App() {
                           <button className="btn-cart" onClick={() => handleQty(product.id, 1)}>В корзину</button>
                         </>
                       ) : (
-                        <span style={{ fontSize: 11, color: '#999', fontStyle: 'italic' }}>
+                        <span className="product-status-text">
                           {product.status === 'soon' ? 'Скоро будет' : 'Нет в наличии'}
                         </span>
                       )}
@@ -276,7 +279,10 @@ function App() {
               const qty = quantities[product.id] || 0;
               const isAvailable = product.status === 'available';
               return (
-                <div key={product.id} className="product-card" style={{ opacity: isAvailable ? 1 : 0.5 }}>
+                <div key={product.id} className="product-card" style={{ opacity: isAvailable ? 1 : 0.85 }}>
+                  {product.status === 'available' && <span className="product-badge product-badge--available">В наличии</span>}
+                  {product.status === 'soon' && <span className="product-badge product-badge--soon">Скоро будет</span>}
+                  {product.status === 'unavailable' && <span className="product-badge product-badge--unavailable">Нет в наличии</span>}
                   <img src={product.image} alt={product.name} />
                   <div className="product-card-info">
                     <h3>{product.name}</h3>
@@ -293,7 +299,7 @@ function App() {
                           </button>
                         </>
                       ) : (
-                        <span style={{ fontSize: 11, color: '#999', fontStyle: 'italic' }}>
+                        <span className="product-status-text">
                           {product.status === 'soon' ? 'Скоро будет' : 'Нет в наличии'}
                         </span>
                       )}

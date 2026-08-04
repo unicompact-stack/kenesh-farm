@@ -110,6 +110,32 @@
   flex-direction: column;
   border: 1px solid rgba(0,0,0,0.04);
   transition: box-shadow 0.2s, transform 0.2s;
+  position: relative;
+}
+/* ===== STATUS BADGE ===== */
+.product-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 2;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  white-space: nowrap;
+}
+.product-badge--available { background: rgba(46, 125, 50, 0.92); }
+.product-badge--soon { background: rgba(245, 158, 11, 0.92); }
+.product-badge--unavailable { background: rgba(158, 158, 158, 0.92); }
+.product-badge--soon, .product-badge--unavailable { color: #fff; }
+.product-badge--soon { color: #fff; }
+.product-status-text {
+  font-size: 11px;
+  color: #999;
+  font-style: italic;
 }
 .product-card:hover {
   box-shadow: 0 8px 24px rgba(0,0,0,0.1);
