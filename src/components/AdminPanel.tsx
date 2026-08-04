@@ -3,10 +3,18 @@ import { Plus, Pencil, Trash2, Eye, LogOut, Save, X, Package, Check } from 'luci
 import { Product, ProductStatus } from '../types';
 import { Order } from '../App';
 import { updateOrderStatus } from '../api/orders';
+import { saveProducts as persistProducts, loadProducts as fetchProducts } from '../api/products';
+
+const DEFAULT_PRODUCTS: Product[] = [
+  { id: '1', name: 'Молоко цельное 3.5-4.5%', price: 120, image: '/images/milk.jpg', description: '1 л, свежее утренней дойки', status: 'available' },
+  { id: '2', name: 'Творог домашний 9%', price: 350, image: '/images/curd.jpg', description: '500 г, зернистый', status: 'available' },
+  { id: '3', name: 'Сметана фермерская 20%', price: 180, image: '/images/sour-cream.jpg', description: '250 г, густая из сливок', status: 'available' },
+  { id: '4', name: 'Масло сливочное 82.5%', price: 450, image: '/images/butter.jpg', description: '200 г, традиционное', status: 'available' },
+];
 
 interface AdminPanelProps {
   products: Product[];
-  onUpdateProducts: (products: Product[]) => void;
+  onUpdateProducts: (products: Product[]) => Promise<void>;
   orders: Order[];
   onUpdateOrders: (orders: Order[]) => void;
   onExit: () => void;
@@ -325,12 +333,11 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ products, onUpdateProducts, ord
               </div>
             )}
 
-            {/* Reset — только для локальных товаров */}
+            {/* Reset — сброс к начальным товарам */}
             <div className="mt-12 pt-8 border-t border-farm-cold/30 text-center">
-              <button onClick={() => {
+              <button onClick={async () => {
                 if (confirm('Сбросить все товары к начальным?')) {
-                  localStorage.removeItem('kinesh-products');
-                  window.location.reload();
+                  await onUpdateProducts(DEFAULT_PRODUCTS);
                 }
               }} className="text-sm text-farm-dark/30 hover:text-red-500 transition-colors">
                 Сбросить к начальным товарам

@@ -3,6 +3,7 @@ import { Truck, ShieldCheck, Heart, ShoppingCart, ArrowRight, Phone, Mail, Camer
 import AdminPanel from './components/AdminPanel';
 import { Product } from './types';
 import { loadOrders, saveOrder, Order } from './api/orders';
+import { loadProducts as fetchProducts, saveProducts as persistProducts } from './api/products';
 
 const DEFAULT_PRODUCTS: Product[] = [
   { id: '1', name: 'Молоко цельное 3.5-4.5%', price: 120, image: '/images/milk.jpg', description: '1 л, свежее утренней дойки', status: 'available' },
@@ -10,8 +11,6 @@ const DEFAULT_PRODUCTS: Product[] = [
   { id: '3', name: 'Сметана фермерская 20%', price: 180, image: '/images/sour-cream.jpg', description: '250 г, густая из сливок', status: 'available' },
   { id: '4', name: 'Масло сливочное 82.5%', price: 450, image: '/images/butter.jpg', description: '200 г, традиционное', status: 'available' },
 ];
-
-const STORAGE_KEY = 'kinesh-products';
 
 export interface Order {
   id: string;
@@ -23,18 +22,6 @@ export interface Order {
   status: 'new' | 'done';
 }
 
-function loadProducts(): Product[] {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) return JSON.parse(stored);
-  } catch {}
-  return DEFAULT_PRODUCTS;
-}
-
-function saveProducts(products: Product[]) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
-}
-
 function isAdminRoute(): boolean {
   return window.location.hash === '#admin' || window.location.pathname === '/admin';
 }
@@ -42,14 +29,14 @@ function isAdminRoute(): boolean {
 type ModalType = 'about' | 'delivery' | 'contacts' | null;
 
 function App() {
-  const [products, setProducts] = useState<Product[]>(loadProducts);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [productsLoaded, setProductsLoaded] = useState(false);
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
   const [modal, setModal] = useState<ModalType>(null);
   const [isAdmin, setIsAdmin] = useState(isAdminRoute);
   const [orders, setOrders] = useState<Order[]>([]);
-  const [ordersLoaded, setOrdersLoaded] = useState(false);
 
   useEffect(() => {
     const onHashChange = () => setIsAdmin(isAdminRoute());
@@ -57,17 +44,34 @@ function App() {
     return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
 
+  // Загрузка товаров из Supabase
   useEffect(() => {
-    saveProducts(products);
-  }, [products]);
+    fetchProducts().then(data => {
+      if (data.length > 0) {
+        setProducts(data);
+      } else {
+        setProducts(DEFAULT_PRODUCTS);
+      }
+      setProductsLoaded(true);
+    });
+    // Обновлять каждые 30 секунд
+    const interval = setInterval(() => {
+      fetchProducts().then(data => {
+        if (data.length > 0) setProducts(data);
+      });
+    }, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Сохранение товаров в Supabase
+  const handleUpdateProducts = async (newProducts: Product[]) => {
+    setProducts(newProducts);
+    await persistProducts(newProducts);
+  };
 
   // Загрузка заказов из Supabase
   useEffect(() => {
-    loadOrders().then(data => {
-      setOrders(data);
-      setOrdersLoaded(true);
-    });
-    // Обновлять каждые 15 секунд
+    loadOrders().then(setOrders);
     const interval = setInterval(() => {
       loadOrders().then(setOrders);
     }, 15000);
@@ -122,7 +126,7 @@ function App() {
     return (
       <AdminPanel
         products={products}
-        onUpdateProducts={setProducts}
+        onUpdateProducts={handleUpdateProducts}
         orders={orders}
         onUpdateOrders={setOrders}
         onExit={() => {
