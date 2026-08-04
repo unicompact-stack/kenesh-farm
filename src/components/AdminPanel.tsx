@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Pencil, Trash2, Eye, LogOut, Save, X, Package, Check } from 'lucide-react';
 import { Product, ProductStatus } from '../types';
 import { Order } from '../App';
+import { updateOrderStatus } from '../api/orders';
 
 interface AdminPanelProps {
   products: Product[];
@@ -26,18 +27,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ products, onUpdateProducts, ord
   const [showPreview, setShowPreview] = useState(false);
   const [activeTab, setActiveTab] = useState<'products' | 'orders'>('products');
 
-  // Poll for new orders every 10 seconds
-  const [currentOrders, setCurrentOrders] = useState(orders);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      try {
-        const stored = localStorage.getItem('kinesh-orders');
-        if (stored) setCurrentOrders(JSON.parse(stored));
-      } catch {}
-    }, 10000);
-    return () => clearInterval(interval);
-  }, []);
-
+  const currentOrders = orders;
   const newOrdersCount = currentOrders.filter(o => o.status === 'new').length;
 
   const handleNew = () => {
@@ -83,10 +73,12 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ products, onUpdateProducts, ord
     onUpdateProducts(products.map(p => p.id === id ? { ...p, status } : p));
   };
 
-  const handleMarkOrderDone = (orderId: string) => {
-    const updated = currentOrders.map(o => o.id === orderId ? { ...o, status: 'done' as const } : o);
-    setCurrentOrders(updated);
-    onUpdateOrders(updated);
+  const handleMarkOrderDone = async (orderId: string) => {
+    const success = await updateOrderStatus(orderId, 'done');
+    if (success) {
+      const updated = currentOrders.map(o => o.id === orderId ? { ...o, status: 'done' as const } : o);
+      onUpdateOrders(updated);
+    }
   };
 
   const isFormOpen = editing !== null || isNew;
@@ -333,7 +325,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ products, onUpdateProducts, ord
               </div>
             )}
 
-            {/* Reset */}
+            {/* Reset — только для локальных товаров */}
             <div className="mt-12 pt-8 border-t border-farm-cold/30 text-center">
               <button onClick={() => {
                 if (confirm('Сбросить все товары к начальным?')) {
