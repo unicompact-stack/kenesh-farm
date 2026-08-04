@@ -251,22 +251,22 @@ function App() {
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-start gap-4">
             <div className="bg-green-50 p-3 rounded-xl text-farm-green"><Truck size={24} /></div>
             <div>
-              <h3 className="font-bold text-lg">Ближайшая доставка</h3>
-              <p className="text-gray-500 text-sm">Вт и Пт — 10:00–18:00</p>
+              <h3 className="font-bold text-lg">Доставка по Йошкар-Оле</h3>
+              <p className="text-gray-500 text-sm">Пн, Вт, Чт, Пт</p>
             </div>
           </div>
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-start gap-4">
             <div className="bg-green-50 p-3 rounded-xl text-farm-green"><ShieldCheck size={24} /></div>
             <div>
               <h3 className="font-bold text-lg">100% Натурально</h3>
-              <p className="text-gray-500 text-sm">Без ГМО и консервантов</p>
+              <p className="text-gray-500 text-sm">Без промышленной обработки</p>
             </div>
           </div>
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-start gap-4">
             <div className="bg-green-50 p-3 rounded-xl text-farm-green"><Heart size={24} /></div>
             <div>
-              <h3 className="font-bold text-lg">С 2012 года</h3>
-              <p className="text-gray-500 text-sm">Более 50 голов племенного скота</p>
+              <h3 className="font-bold text-lg">Своё хозяйство</h3>
+              <p className="text-gray-500 text-sm">КРС, свиньи, овощи, зерновые</p>
             </div>
           </div>
         </section>
@@ -343,26 +343,27 @@ function App() {
         <div className="modal-overlay" onClick={() => setModal(null)}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
             <h2>О нашем хозяйстве</h2>
-            <p>КФХ «Кенеш» — семейное фермерское хозяйство, основанное в 2012 году. Мы начинали с двух коров и огромного желания производить честный, натуральный продукт.</p>
-            <p style={{ marginTop: 12 }}>Сегодня наше стадо насчитывает более 50 голов племенного скота. Мы сами выращиваем корма на собственных полях.</p>
+            <p>КФХ «Кенеш» — многопрофильное фермерское хозяйство в Республике Марий Эл. Мы выращиваем крупный рогатый скот (для молока и мяса), свиней, овощи и зерновые.</p>
+            <p style={{ marginTop: 12 }}>Фермерские продукты не проходят обычной промышленной обработки — они полностью сохраняют свои полезные качества и вкус, выращиваются и производятся в экологически чистых местах.</p>
             <div style={{ marginTop: 16, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
               <div style={{ padding: 12, background: 'rgba(46,125,50,0.06)', borderRadius: 12 }}>
-                <p style={{ fontWeight: 700, color: '#2e7d32', margin: '0 0 4px', fontSize: 13 }}>Свежесть</p>
-                <p style={{ fontSize: 12, color: '#666', margin: 0 }}>От дойки до доставки — не более 12 часов</p>
+                <p style={{ fontWeight: 700, color: '#2e7d32', margin: '0 0 4px', fontSize: 13 }}>Своё хозяйство</p>
+                <p style={{ fontSize: 12, color: '#666', margin: 0 }}>КРС, свиньи, овощи, зерновые</p>
               </div>
               <div style={{ padding: 12, background: 'rgba(46,125,50,0.06)', borderRadius: 12 }}>
-                <p style={{ fontWeight: 700, color: '#2e7d32', margin: '0 0 4px', fontSize: 13 }}>Честный состав</p>
-                <p style={{ fontSize: 12, color: '#666', margin: 0 }}>Только цельное молоко и закваски</p>
+                <p style={{ fontWeight: 700, color: '#2e7d32', margin: '0 0 4px', fontSize: 13 }}>Без обработки</p>
+                <p style={{ fontSize: 12, color: '#666', margin: 0 }}>Продукты без промышленной переработки</p>
               </div>
               <div style={{ padding: 12, background: 'rgba(46,125,50,0.06)', borderRadius: 12 }}>
-                <p style={{ fontWeight: 700, color: '#2e7d32', margin: '0 0 4px', fontSize: 13 }}>Традиции</p>
-                <p style={{ fontSize: 12, color: '#666', margin: 0 }}>Рецепты, проверенные временем</p>
+                <p style={{ fontWeight: 700, color: '#2e7d32', margin: '0 0 4px', fontSize: 13 }}>Экологично</p>
+                <p style={{ fontSize: 12, color: '#666', margin: 0 }}>Выращиваем в экологически чистых местах</p>
               </div>
               <div style={{ padding: 12, background: 'rgba(46,125,50,0.06)', borderRadius: 12 }}>
-                <p style={{ fontWeight: 700, color: '#2e7d32', margin: '0 0 4px', fontSize: 13 }}>Открытость</p>
-                <p style={{ fontSize: 12, color: '#666', margin: 0 }}>Приезжайте к нам на ферму</p>
+                <p style={{ fontWeight: 700, color: '#2e7d32', margin: '0 0 4px', fontSize: 13 }}>Натуральный вкус</p>
+                <p style={{ fontSize: 12, color: '#666', margin: 0 }}>Сохраняем всё полезное и вкусное</p>
               </div>
             </div>
+            <p style={{ marginTop: 16, fontSize: 12, color: '#999' }}>Республика Марий Эл, Медведевский район, село Ежово</p>
             <button className="modal-close" onClick={() => setModal(null)}>Понятно</button>
           </div>
         </div>
@@ -372,24 +373,24 @@ function App() {
         <div className="modal-overlay" onClick={() => setModal(null)}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
             <h2>Доставка</h2>
-            <p style={{ fontWeight: 600, marginBottom: 8 }}>Районы доставки:</p>
+            <p style={{ fontWeight: 600, marginBottom: 8 }}>Город доставки:</p>
             <ul style={{ paddingLeft: 18, margin: '0 0 16px' }}>
-              <li>Калининский район</li>
-              <li>Московский район</li>
-              <li>Заволжский район</li>
-              <li>Центральный район</li>
-              <li>Пригород (до 20 км)</li>
+              <li>Йошкар-Ола</li>
             </ul>
-            <p style={{ fontWeight: 600, marginBottom: 8 }}>График:</p>
+            <p style={{ fontWeight: 600, marginBottom: 8 }}>Дни доставки:</p>
             <ul style={{ paddingLeft: 18, margin: '0 0 16px' }}>
-              <li><strong>Вторник</strong> — заказы до вечера воскресенья</li>
-              <li><strong>Пятница</strong> — заказы до вечера среды</li>
+              <li>Понедельник</li>
+              <li>Вторник</li>
+              <li>Четверг</li>
+              <li>Пятница</li>
             </ul>
             <p style={{ fontWeight: 600, marginBottom: 8 }}>Условия:</p>
             <ul style={{ paddingLeft: 18, margin: 0 }}>
-              <li>Минимальный заказ: 1 000 ₽</li>
-              <li>Доставка по городу: бесплатно от 2 000 ₽, иначе 200 ₽</li>
-              <li>Оплата: наличными или переводом курьеру</li>
+              <li>Минимальный заказ: 300 ₽</li>
+              <li>Доставка по городу: бесплатно от 1 500 ₽</li>
+              <li>Стоимость доставки до 1 500 ₽: 200 ₽</li>
+              <li>Оплата: наличными или банковской картой</li>
+              <li>При наличии продукции — готовы привезти в день заказа</li>
             </ul>
             <button className="modal-close" onClick={() => setModal(null)}>Понятно</button>
           </div>
@@ -401,26 +402,30 @@ function App() {
           <div className="modal-content" onClick={e => e.stopPropagation()}>
             <h2>Контакты</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              <a href="tel:+79001234567" style={{ display: 'flex', alignItems: 'center', gap: 12, padding: 12, background: '#f5f5f5', borderRadius: 12, textDecoration: 'none', color: 'inherit' }}>
+              <a href="tel:+79060236464" style={{ display: 'flex', alignItems: 'center', gap: 12, padding: 12, background: '#f5f5f5', borderRadius: 12, textDecoration: 'none', color: 'inherit' }}>
                 <Phone size={20} color="#2e7d32" />
                 <div>
                   <p style={{ fontSize: 10, color: '#999', margin: 0, textTransform: 'uppercase', fontWeight: 700 }}>Телефон</p>
-                  <p style={{ margin: 0, fontWeight: 500 }}>+7 (900) 123-45-67</p>
+                  <p style={{ margin: 0, fontWeight: 500 }}>+7 (906) 023-64-64</p>
                 </div>
               </a>
-              <a href="mailto:info@kenesh-farm.ru" style={{ display: 'flex', alignItems: 'center', gap: 12, padding: 12, background: '#f5f5f5', borderRadius: 12, textDecoration: 'none', color: 'inherit' }}>
+              <a href="mailto:kfh-kenesh@yandex.ru" style={{ display: 'flex', alignItems: 'center', gap: 12, padding: 12, background: '#f5f5f5', borderRadius: 12, textDecoration: 'none', color: 'inherit' }}>
                 <Mail size={20} color="#2e7d32" />
                 <div>
                   <p style={{ fontSize: 10, color: '#999', margin: 0, textTransform: 'uppercase', fontWeight: 700 }}>Email</p>
-                  <p style={{ margin: 0, fontWeight: 500 }}>info@kenesh-farm.ru</p>
+                  <p style={{ margin: 0, fontWeight: 500 }}>kfh-kenesh@yandex.ru</p>
                 </div>
               </a>
-              <div style={{ display: 'flex', gap: 12, marginTop: 4 }}>
-                <a href="#" style={{ padding: 12, background: '#fce4ec', borderRadius: '50%', color: '#e91e63' }}><Camera size={20} /></a>
-                <a href="#" style={{ padding: 12, background: '#e3f2fd', borderRadius: '50%', color: '#2196f3' }}><Send size={20} /></a>
-              </div>
+              <a href="https://wa.me/79060236464" target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', gap: 12, padding: 12, background: '#e6f7e6', borderRadius: 12, textDecoration: 'none', color: 'inherit' }}>
+                <Send size={20} color="#2e7d32" />
+                <div>
+                  <p style={{ fontSize: 10, color: '#999', margin: 0, textTransform: 'uppercase', fontWeight: 700 }}>WhatsApp</p>
+                  <p style={{ margin: 0, fontWeight: 500 }}>Написать в WhatsApp</p>
+                </div>
+              </a>
             </div>
-            <p style={{ marginTop: 16, fontSize: 12, color: '#999' }}>Пн-Вс с 9:00 до 20:00</p>
+            <p style={{ marginTop: 16, fontSize: 12, color: '#999' }}>Пн–Пт с 08:00 до 17:00</p>
+            <p style={{ fontSize: 12, color: '#999', marginTop: 4 }}>Респ. Марий Эл, с. Ежово</p>
             <button className="modal-close" onClick={() => setModal(null)}>Понятно</button>
           </div>
         </div>
