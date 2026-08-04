@@ -21,7 +21,6 @@ export interface Order {
   phone: string;
   time: string;
   status: 'new' | 'done';
-  consent: boolean;
 }
 
 function loadProducts(): Product[] {
@@ -40,10 +39,6 @@ function isAdminRoute(): boolean {
   return window.location.hash === '#admin' || window.location.pathname === '/admin';
 }
 
-function isPrivacyRoute(): boolean {
-  return window.location.hash === '#privacy' || window.location.pathname === '/privacy';
-}
-
 type ModalType = 'about' | 'delivery' | 'contacts' | null;
 
 function App() {
@@ -51,18 +46,13 @@ function App() {
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
-  const [consent, setConsent] = useState(false);
   const [modal, setModal] = useState<ModalType>(null);
   const [isAdmin, setIsAdmin] = useState(isAdminRoute);
-  const [isPrivacy, setIsPrivacy] = useState(isPrivacyRoute);
   const [orders, setOrders] = useState<Order[]>([]);
   const [ordersLoaded, setOrdersLoaded] = useState(false);
 
   useEffect(() => {
-    const onHashChange = () => {
-      setIsAdmin(isAdminRoute());
-      setIsPrivacy(isPrivacyRoute());
-    };
+    const onHashChange = () => setIsAdmin(isAdminRoute());
     window.addEventListener('hashchange', onHashChange);
     return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
@@ -98,7 +88,6 @@ function App() {
     if (totalQty === 0) { alert('Добавьте хотя бы один продукт'); return; }
     if (!address.trim()) { alert('Укажите адрес доставки'); return; }
     if (!phone.trim()) { alert('Укажите телефон'); return; }
-    if (!consent) { alert('Нужно согласие на обработку персональных данных'); return; }
 
     const items = products
       .filter(p => (quantities[p.id] || 0) > 0)
@@ -111,7 +100,6 @@ function App() {
       phone: phone.trim(),
       time: new Date().toLocaleString('ru-RU'),
       status: 'new' as const,
-      consent: true,
     };
 
     const saved = await saveOrder(newOrder);
@@ -128,7 +116,6 @@ function App() {
     setQuantities({});
     setAddress('');
     setPhone('');
-    setConsent(false);
   };
 
   if (isAdmin) {
@@ -143,49 +130,6 @@ function App() {
           window.history.replaceState(null, '', window.location.pathname);
         }}
       />
-    );
-  }
-
-  if (isPrivacy) {
-    return (
-      <div className="min-h-screen bg-farm-cream p-6">
-        <div className="max-w-2xl mx-auto bg-white rounded-2xl p-8 shadow-sm">
-          <h1 className="text-2xl font-bold mb-6">Политика конфиденциальности</h1>
-          <div className="space-y-4 text-sm text-gray-700">
-            <h2 className="font-bold text-lg">1. Какие данные мы собираем</h2>
-            <p>При оформлении заказа мы собираем:</p>
-            <ul className="list-disc pl-5 space-y-1">
-              <li>Телефон для связи по заказу</li>
-              <li>Адрес доставки</li>
-            </ul>
-
-            <h2 className="font-bold text-lg">2. Зачем мы собираем данные</h2>
-            <p>Для доставки заказа и связи с вами по поводу заказа.</p>
-
-            <h2 className="font-bold text-lg">3. Что мы НЕ делаем с данными</h2>
-            <ul className="list-disc pl-5 space-y-1">
-              <li>Не передаём третьим лицам</li>
-              <li>Не используем для рекламы</li>
-              <li>Не продаём и не обмениваем</li>
-            </ul>
-
-            <h2 className="font-bold text-lg">4. Где хранятся данные</h2>
-            <p>Данные хранятся на серверах Supabase (Европейский Союз) с шифрованием.</p>
-
-            <h2 className="font-bold text-lg">5. Ваши права</h2>
-            <p>Вы можете запросить удаление ваших данных, написав на: kfh-kenesh@yandex.ru</p>
-
-            <h2 className="font-bold text-lg">6. Контакты</h2>
-            <p>По вопросам обработки персональных данных: kfh-kenesh@yandex.ru</p>
-          </div>
-          <button
-            onClick={() => { window.location.hash = ''; window.history.replaceState(null, '', window.location.pathname); }}
-            className="mt-8 btn-submit"
-          >
-            Вернуться на главную
-          </button>
-        </div>
-      </div>
     );
   }
 
@@ -258,18 +202,6 @@ function App() {
                 <input className="order-input" type="tel" placeholder="Контакт телефон" value={phone} onChange={e => setPhone(e.target.value)} />
               </div>
             </div>
-            <label className="flex items-center gap-2 text-xs text-gray-500 my-3 px-1 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={consent}
-                onChange={(e) => setConsent(e.target.checked)}
-                className="w-4 h-4 rounded border-gray-300"
-              />
-              <span>
-                Согласен на обработку персональных данных (
-                <a href="#privacy" className="underline">политика</a>)
-              </span>
-            </label>
             <button className="btn-submit" onClick={handleSubmit}>Отправить заказ</button>
           </div>
 
@@ -397,18 +329,6 @@ function App() {
                 <input className="order-input" placeholder="Адрес доставки" value={address} onChange={e => setAddress(e.target.value)} />
                 <input className="order-input" type="tel" placeholder="Контакт телефон" value={phone} onChange={e => setPhone(e.target.value)} />
               </div>
-              <label className="flex items-center gap-2 text-sm text-gray-500 mb-4 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={consent}
-                  onChange={(e) => setConsent(e.target.checked)}
-                  className="w-4 h-4 rounded border-gray-300"
-                />
-                <span>
-                  Согласен на обработку персональных данных (
-                  <a href="#privacy" className="underline">политика</a>)
-                </span>
-              </label>
               <div className="flex items-center justify-between">
                 <span className="text-lg font-bold">Итого: {total} ₽</span>
                 <button className="btn-submit" style={{ width: 'auto', padding: '12px 32px' }} onClick={handleSubmit}>

@@ -11,7 +11,6 @@ export interface Order {
   phone: string;
   time: string;
   status: 'new' | 'done';
-  consent: boolean;
 }
 
 // Загрузить все заказы
@@ -31,7 +30,6 @@ export async function loadOrders(): Promise<Order[]> {
       phone: row.phone,
       time: row.time,
       status: row.status,
-      consent: row.consent,
     }));
   } catch {
     return [];
@@ -51,7 +49,6 @@ export async function saveOrder(order: Omit<Order, 'id'>): Promise<boolean> {
         phone: order.phone,
         time: order.time,
         status: order.status,
-        consent: order.consent,
       }),
     });
     return res.ok;
