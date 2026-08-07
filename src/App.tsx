@@ -175,6 +175,7 @@ function App() {
                   <img src={product.image} alt={product.name} loading="lazy" decoding="async" />
                   <div className="product-card-info">
                     <h3>{product.name}</h3>
+                    <p className="product-desc">{product.description}</p>
                     <div className="product-card-controls">
                       <span className="price">{product.price} ₽</span>
                       {isAvailable ? (

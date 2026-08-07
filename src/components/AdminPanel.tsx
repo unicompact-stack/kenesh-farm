@@ -94,12 +94,12 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ products, onUpdateProducts, ord
   return (
     <div className="min-h-screen bg-farm-cream relative" style={{ zIndex: 10 }}>
       {/* Top bar */}
-      <div className="bg-farm-green-dark text-white px-4 py-3 flex items-center justify-between sticky top-0 z-50 shadow-sm">
-        <div className="flex items-center gap-3">
-          <h1 className="text-lg font-bold">Панель продавца</h1>
-          <span className="text-white/50 text-sm hidden sm:inline">КФХ Кенеш</span>
+      <div className="bg-farm-green-dark text-white px-3 sm:px-4 py-2.5 sm:py-3 flex items-center justify-between sticky top-0 z-50 shadow-sm gap-2">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <h1 className="text-base sm:text-lg font-bold truncate">Панель продавца</h1>
+          <span className="text-white/50 text-sm hidden sm:inline shrink-0">КФХ Кенеш</span>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <button
             onClick={() => setShowPreview(!showPreview)}
             className="flex items-center gap-2 bg-white/10 hover:bg-white/20 px-2 sm:px-4 py-2 rounded-lg text-sm transition-colors"
@@ -118,17 +118,25 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ products, onUpdateProducts, ord
       </div>
 
       {/* Tabs */}
-      <div className="max-w-5xl mx-auto px-4 pt-4">
+      <div className="max-w-5xl mx-auto px-4 pt-3 sm:pt-4">
         <div className="flex gap-2 mb-6">
           <button
             onClick={() => setActiveTab('products')}
-            className={`px-5 py-2.5 rounded-xl font-bold text-sm transition-all ${activeTab === 'products' ? 'bg-farm-green-dark text-white' : 'bg-white text-farm-dark hover:bg-gray-100'}`}
+            className={`flex-1 sm:flex-none px-3 sm:px-5 py-2.5 rounded-xl font-bold text-sm transition-all ${
+              activeTab === 'products'
+                ? 'bg-farm-green-dark text-white'
+                : 'bg-white text-farm-dark hover:bg-gray-100'
+            }`}
           >
             Товары ({products.length})
           </button>
           <button
             onClick={() => setActiveTab('orders')}
-            className={`px-5 py-2.5 rounded-xl font-bold text-sm transition-all relative ${activeTab === 'orders' ? 'bg-farm-green-dark text-white' : 'bg-white text-farm-dark hover:bg-gray-100'}`}
+            className={`flex-1 sm:flex-none px-3 sm:px-5 py-2.5 rounded-xl font-bold text-sm transition-all relative whitespace-nowrap ${
+              activeTab === 'orders'
+                ? 'bg-farm-green-dark text-white'
+                : 'bg-white text-farm-dark hover:bg-gray-100'
+            }`}
           >
             <Package size={16} className="inline mr-1" />
             Заказы ({currentOrders.length})
@@ -202,7 +210,8 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ products, onUpdateProducts, ord
                     </div>
                     <div className="order-total">Итого: {order.total} ₽</div>
                     <div className="order-contact">
-                      Адрес: {order.address} | Телефон: {order.phone}
+                      <div>📍 {order.address}</div>
+                      <div>📞 {order.phone}</div>
                     </div>
                   </div>
                 ))}
