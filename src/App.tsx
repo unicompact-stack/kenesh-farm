@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Truck, ShieldCheck, Heart, ShoppingCart, ArrowRight, Phone, Mail, Camera, Send } from 'lucide-react';
 import AdminPanel from './components/AdminPanel';
 import { Product } from './types';
-import { loadOrders, saveOrder, Order } from './api/orders';
+import { loadOrders, saveOrder } from './api/orders';
 import { loadProducts as fetchProducts, saveProducts as persistProducts } from './api/products';
 
 const DEFAULT_PRODUCTS: Product[] = [
@@ -172,7 +172,7 @@ function App() {
                   {product.status === 'available' && <span className="product-badge product-badge--available">В наличии</span>}
                   {product.status === 'soon' && <span className="product-badge product-badge--soon">Скоро будет</span>}
                   {product.status === 'unavailable' && <span className="product-badge product-badge--unavailable">Нет в наличии</span>}
-                  <img src={product.image} alt={product.name} />
+                  <img src={product.image} alt={product.name} loading="lazy" decoding="async" />
                   <div className="product-card-info">
                     <h3>{product.name}</h3>
                     <div className="product-card-controls">
@@ -296,7 +296,7 @@ function App() {
                   {product.status === 'available' && <span className="product-badge product-badge--available">В наличии</span>}
                   {product.status === 'soon' && <span className="product-badge product-badge--soon">Скоро будет</span>}
                   {product.status === 'unavailable' && <span className="product-badge product-badge--unavailable">Нет в наличии</span>}
-                  <img src={product.image} alt={product.name} />
+                  <img src={product.image} alt={product.name} loading="lazy" decoding="async" />
                   <div className="product-card-info">
                     <h3>{product.name}</h3>
                     <p style={{ fontSize: 12, color: '#888', margin: 0 }}>{product.description}</p>

@@ -149,12 +149,14 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ products, onUpdateProducts, ord
               <h2 className="font-bold text-farm-dark">Предпросмотр магазина</h2>
               <a href="/" className="text-farm-green-dark hover:underline text-sm">Открыть в новой вкладке →</a>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-2">
               {products.map(p => (
-                <div key={p.id} className="bg-farm-light rounded-xl p-3 text-center">
-                  <img src={p.image} alt={p.name} className="w-full aspect-square object-cover rounded-lg mb-2" />
-                  <p className="text-xs font-bold text-farm-dark truncate">{p.name}</p>
-                  <p className="text-xs text-farm-dark/50">{p.price} ₽</p>
+                <div key={p.id} className="flex items-center gap-3 bg-farm-light rounded-xl p-2">
+                  <img src={p.image} alt={p.name} className="w-12 h-12 object-cover rounded-lg shrink-0" />
+                  <div className="min-w-0">
+                    <p className="text-xs font-bold text-farm-dark truncate">{p.name}</p>
+                    <p className="text-xs text-farm-dark/50">{p.price} ₽</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -276,11 +278,11 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ products, onUpdateProducts, ord
                       <p className="text-xs text-gray-400 mt-1">Выберите готовую картинку или добавьте свою в папку /images/</p>
                     </div>
                   </div>
-                  <div className="flex flex-col items-center justify-center bg-farm-light rounded-xl p-6">
-                    <p className="text-xs text-farm-dark/40 mb-3">Предпросмотр</p>
-                    <img src={form.image} alt={form.name || 'Товар'} className="w-40 h-40 object-cover rounded-xl mb-3 shadow-sm" />
-                    <p className="font-bold text-farm-dark text-center">{form.name || 'Название'}</p>
-                    <p className="text-sm text-farm-dark/50">{form.description || 'Описание'}</p>
+                  <div className="flex flex-col items-center justify-center bg-farm-light rounded-xl p-4">
+                    <p className="text-xs text-farm-dark/40 mb-2">Предпросмотр</p>
+                    <img src={form.image} alt={form.name || 'Товар'} className="w-24 h-24 object-cover rounded-xl mb-2 shadow-sm" />
+                    <p className="font-bold text-farm-dark text-center text-sm">{form.name || 'Название'}</p>
+                    <p className="text-xs text-farm-dark/50">{form.description || 'Описание'}</p>
                     <p className="font-bold text-farm-accent mt-1">{form.price || 0} ₽</p>
                   </div>
                 </div>
